@@ -1,0 +1,32 @@
+POST http://localhost:8000/users
+Content-Type: application/json
+
+{
+    "name": "{{$random.alphabetic(30)}}",
+    "email": "{{$random.email}}",
+    "password": "123456Abc"
+}
+
+###
+
+POST http://localhost:8000/users
+Content-Type: application/json
+
+{
+    "name": "{{$random.alphabetic(30)}}",
+    "email": "teste@teste.com",
+    "password": "123456Abc"
+}
+
+###
+
+POST http://localhost:8000/users/auth
+Content-Type: application/json
+
+{
+  "email": "teste@teste.com",
+  "password": "123456Abc"
+}
+
+
+

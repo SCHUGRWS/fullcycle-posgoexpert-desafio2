@@ -1,0 +1,108 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a cep finder API",
+        "title": "GO Expert Desafio 2",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8000",
+    "basePath": "/",
+    "paths": {
+        "/busca-cep/{cep}": {
+            "get": {
+                "description": "Find a cep",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cep"
+                ],
+                "summary": "Find a cep",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Cep",
+                        "name": "cep",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_SCHUGRWS_fullcycle-posgoexpert-desafio2_internal_dto_webserver.FindCepResponseDto"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_SCHUGRWS_fullcycle-posgoexpert-desafio2_internal_dto.Error"
+                        }
+                    },
+                    "408": {
+                        "description": "Request Timeout",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_SCHUGRWS_fullcycle-posgoexpert-desafio2_internal_dto.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_SCHUGRWS_fullcycle-posgoexpert-desafio2_internal_dto.Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "github_com_SCHUGRWS_fullcycle-posgoexpert-desafio2_internal_dto.Error": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_SCHUGRWS_fullcycle-posgoexpert-desafio2_internal_dto_client.CepClientResponseDto": {
+            "type": "object",
+            "properties": {
+                "bairro": {
+                    "type": "string"
+                },
+                "cep": {
+                    "type": "string"
+                },
+                "cidade": {
+                    "type": "string"
+                },
+                "complemento": {
+                    "type": "string"
+                },
+                "logradouro": {
+                    "type": "string"
+                },
+                "uf": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_SCHUGRWS_fullcycle-posgoexpert-desafio2_internal_dto_webserver.FindCepResponseDto": {
+            "type": "object",
+            "properties": {
+                "api-origem": {
+                    "type": "string"
+                },
+                "dados-endereco": {
+                    "$ref": "#/definitions/github_com_SCHUGRWS_fullcycle-posgoexpert-desafio2_internal_dto_client.CepClientResponseDto"
+                }
+            }
+        }
+    }
+}

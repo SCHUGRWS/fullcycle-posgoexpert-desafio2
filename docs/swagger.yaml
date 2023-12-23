@@ -1,0 +1,71 @@
+basePath: /
+definitions:
+  github_com_SCHUGRWS_fullcycle-posgoexpert-desafio2_internal_dto.Error:
+    properties:
+      message:
+        type: string
+    type: object
+  github_com_SCHUGRWS_fullcycle-posgoexpert-desafio2_internal_dto_client.CepClientResponseDto:
+    properties:
+      bairro:
+        type: string
+      cep:
+        type: string
+      cidade:
+        type: string
+      complemento:
+        type: string
+      logradouro:
+        type: string
+      uf:
+        type: string
+    type: object
+  github_com_SCHUGRWS_fullcycle-posgoexpert-desafio2_internal_dto_webserver.FindCepResponseDto:
+    properties:
+      api-origem:
+        type: string
+      dados-endereco:
+        $ref: '#/definitions/github_com_SCHUGRWS_fullcycle-posgoexpert-desafio2_internal_dto_client.CepClientResponseDto'
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: This is a cep finder API
+  termsOfService: http://swagger.io/terms/
+  title: GO Expert Desafio 2
+  version: "1.0"
+paths:
+  /busca-cep/{cep}:
+    get:
+      consumes:
+      - application/json
+      description: Find a cep
+      parameters:
+      - description: Cep
+        in: path
+        name: cep
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_SCHUGRWS_fullcycle-posgoexpert-desafio2_internal_dto_webserver.FindCepResponseDto'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_SCHUGRWS_fullcycle-posgoexpert-desafio2_internal_dto.Error'
+        "408":
+          description: Request Timeout
+          schema:
+            $ref: '#/definitions/github_com_SCHUGRWS_fullcycle-posgoexpert-desafio2_internal_dto.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/github_com_SCHUGRWS_fullcycle-posgoexpert-desafio2_internal_dto.Error'
+      summary: Find a cep
+      tags:
+      - Cep
+swagger: "2.0"
