@@ -7,7 +7,6 @@ import (
 	"time"
 )
 
-// Test ViaCepApiClient FindCep with httpmock
 func TestViaCepApiClient_FindCep(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()

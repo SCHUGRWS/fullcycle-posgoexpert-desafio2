@@ -33,7 +33,6 @@ func main() {
 	r.Use(middleware.RequestID)
 	r.Use(middleware.Recoverer)
 
-	//Product routes
 	r.Route("/busca-cep", func(r chi.Router) {
 		r.Get("/{cep}", cepHandler.FindCep)
 	})
