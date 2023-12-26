@@ -51,7 +51,7 @@ func (c *CepHandler) FindCep(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(errorMessage)
 		return
 	}
-	cepInt, err := strconv.Atoi(cep)
+	_, err := strconv.Atoi(cep)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		errorMessage := dto.Error{Message: "Cep inválido"}
@@ -63,7 +63,7 @@ func (c *CepHandler) FindCep(w http.ResponseWriter, r *http.Request) {
 	chanelViaCep := make(chan *clientDto.CepClientResponseDto)
 
 	go func() {
-		result, err := c.BrasilApiClient.FindCep(cepInt)
+		result, err := c.BrasilApiClient.FindCep(cep)
 		if err != nil {
 			fmt.Println(fmt.Errorf("Erro ao buscar CEP BrasilApi: %v\n", err))
 			return
@@ -72,7 +72,7 @@ func (c *CepHandler) FindCep(w http.ResponseWriter, r *http.Request) {
 	}()
 
 	go func() {
-		result, err := c.ViaCepApiClient.FindCep(cepInt)
+		result, err := c.ViaCepApiClient.FindCep(cep)
 		if err != nil {
 			fmt.Println(fmt.Errorf("Erro ao buscar CEP ViaCEP: %v\n", err))
 			return

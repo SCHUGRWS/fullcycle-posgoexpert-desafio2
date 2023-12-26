@@ -11,7 +11,7 @@ func TestViaCepApiClient_FindCep(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
-	httpmock.RegisterResponder("GET", "https://viacep.com.br/ws/12345678/json/",
+	httpmock.RegisterResponder("GET", "https://viacep.com.br/ws/02345678/json/",
 		httpmock.NewStringResponder(200, `{
 			"cep": "01001-000",
 			"logradouro": "Praça da Sé",
@@ -26,7 +26,7 @@ func TestViaCepApiClient_FindCep(t *testing.T) {
 		}`))
 
 	viaCepApiClient := NewViaCepClient("https://viacep.com.br/ws")
-	result, err := viaCepApiClient.FindCep(12345678)
+	result, err := viaCepApiClient.FindCep("02345678")
 	assert.NotNil(t, result)
 	assert.NoError(t, err)
 	assert.Equal(t, "01001-000", result.Cep)
@@ -46,7 +46,7 @@ func TestViaCepApiClient_FindCep_Error(t *testing.T) {
 		}`))
 
 	viaCepApiClient := NewViaCepClient("https://viacep.com.br/ws")
-	result, err := viaCepApiClient.FindCep(12345678)
+	result, err := viaCepApiClient.FindCep("12345678")
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "Erro 500 ao fazer requisição\n", err.Error())
@@ -71,7 +71,7 @@ func TestViaCepApiClient_FindCep_Timeout(t *testing.T) {
 		}`).Delay(1000*time.Millisecond))
 
 	viaCepApiClient := NewViaCepClient("https://viacep.com.br/ws")
-	result, err := viaCepApiClient.FindCep(12345678)
+	result, err := viaCepApiClient.FindCep("12345678")
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "Erro ao fazer requisição: Get \"https://viacep.com.br/ws/12345678/json/\": context deadline exceeded\n", err.Error())

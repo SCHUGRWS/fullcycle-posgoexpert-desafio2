@@ -5,5 +5,5 @@ import (
 )
 
 type CepApiClient interface {
-	FindCep(cep int) (*clientDto.CepClientResponseDto, error)
+	FindCep(cep string) (*clientDto.CepClientResponseDto, error)
 }

@@ -18,7 +18,7 @@ func NewViaCepClient(uri string) *ViaCepClient {
 	return &ViaCepClient{URI: uri}
 }
 
-func (client *ViaCepClient) FindCep(cep int) (*clientDto.CepClientResponseDto, error) {
+func (client *ViaCepClient) FindCep(cep string) (*clientDto.CepClientResponseDto, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Millisecond*999)
 	defer cancel()
 

@@ -18,7 +18,7 @@ func NewBrasilApiClient(uri string) *BrasilApiClient {
 	return &BrasilApiClient{URI: uri}
 }
 
-func (client *BrasilApiClient) FindCep(cep int) (*clientDto.CepClientResponseDto, error) {
+func (client *BrasilApiClient) FindCep(cep string) (*clientDto.CepClientResponseDto, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Millisecond*999)
 	defer cancel()
 

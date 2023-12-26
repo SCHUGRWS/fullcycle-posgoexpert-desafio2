@@ -22,7 +22,7 @@ func TestBrasilApiCepClient_FindCep(t *testing.T) {
 		}`))
 
 	brasilApiClient := NewBrasilApiClient("https://brasilapi.com.br/api")
-	result, err := brasilApiClient.FindCep(12345678)
+	result, err := brasilApiClient.FindCep("12345678")
 	assert.NotNil(t, result)
 	assert.NoError(t, err)
 	assert.Equal(t, "01001-000", result.Cep)
@@ -36,14 +36,14 @@ func TestBrasilApiCepClient_FindCep_Error(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
-	httpmock.RegisterResponder("GET", "https://brasilapi.com.br/api/cep/v1/12345678",
+	httpmock.RegisterResponder("GET", "https://brasilapi.com.br/api/cep/v1/02345678",
 		httpmock.NewStringResponder(500, `{
 			"code": 500,
 			"message": "Internal Server Error"
 		}`))
 
 	brasilApiClient := NewBrasilApiClient("https://brasilapi.com.br/api")
-	result, err := brasilApiClient.FindCep(12345678)
+	result, err := brasilApiClient.FindCep("02345678")
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "Erro 500 ao fazer requisição\n", err.Error())
@@ -64,7 +64,7 @@ func TestBrasilApiCepClient_FindCep_Timeout(t *testing.T) {
 		}`).Delay(1000*time.Millisecond))
 
 	brasilApiClient := NewBrasilApiClient("https://brasilapi.com.br/api")
-	result, err := brasilApiClient.FindCep(12345678)
+	result, err := brasilApiClient.FindCep("12345678")
 	assert.Nil(t, result)
 	assert.Error(t, err)
 	assert.Equal(t, "Erro ao fazer requisição: Get \"https://brasilapi.com.br/api/cep/v1/12345678\": context deadline exceeded\n", err.Error())
